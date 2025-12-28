@@ -108,6 +108,29 @@ require("lazy").setup({
     end 
   },
 
+  { "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup({
+        size = 12,
+        direction = "horizontal",
+        shade_terminals = true,
+        start_in_insert = true,
+        persist_size = true,
+      })
+
+      local Terminal = require("toggleterm.terminal").Terminal
+      local bottom_term = Terminal:new({
+        direction = "horizontal",
+        hidden = true,
+      })
+
+      map({"n", "t"}, "<leader>t", function()
+        bottom_term:toggle()
+      end, silent)
+    end
+  },
+
   { "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup()
@@ -327,5 +350,4 @@ end, {})
 map("n", "<leader>r", ":CppRun<CR>", silent)
 
 -- Quick terminal toggle
-map("n", "<leader>t", ": split | terminal<CR>:resize 12<CR>i", silent)
 map("t", "<Esc>", "<C-\\><C-n>", silent) -- Exit terminal mode with Esc
