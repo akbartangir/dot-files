@@ -1,0 +1,51 @@
+BasedOnStyle: LLVM
+Language: Cpp
+
+# Indentation
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+
+# Line length
+ColumnLimit: 100
+
+# Braces
+BreakBeforeBraces: Attach
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+
+# Pointer & reference alignment
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+# Includes
+SortIncludes: true
+IncludeBlocks: Regroup
+
+# Spacing
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpaceBeforeRangeBasedForLoopColon: true
+
+# Alignments
+AlignAfterOpenBracket: Align
+AlignOperands: true
+AlignTrailingComments: true
+
+# Comments
+ReflowComments: true
+
+# Functions & parameters
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+BinPackArguments: false
+
+# Namespace formatting
+NamespaceIndentation: Inner
+FixNamespaceComments: true
+
+# Empty lines
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
