@@ -33,6 +33,7 @@ SpaceBeforeRangeBasedForLoopColon: true
 AlignAfterOpenBracket: Align
 AlignOperands: true
 AlignTrailingComments: true
+AlwaysBreakTemplateDeclarations: Yes
 
 # Comments
 ReflowComments: true
