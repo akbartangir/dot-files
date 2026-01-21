@@ -28,7 +28,7 @@ o.completeopt = "menu,menuone,noselect"
 -- Basic keymaps
 local map = vim.keymap.set
 local silent = { silent = true }
-map({"n","v"}, "<Space>", "<Nop>", silent)
+map({ "n", "v" }, "<Space>", "<Nop>", silent)
 map("n", "<leader>w", ":w<CR>", silent)
 map("n", "<leader>q", ":q<CR>", silent)
 
@@ -48,8 +48,8 @@ map("n", "<C-l>", "<C-w>l", silent)
 map("n", "<leader><leader>", "<C-w>w", silent)
 
 -- Buffer navigation
-map("n", "]b", ":bnext<CR>", silent)
-map("n", "[b", ":bprevious<CR>", silent)
+map("n", "<leader>]", ":bnext<CR>", silent)
+map("n", "<leader>[", ":bprevious<CR>", silent)
 map("n", "<leader>bd", ":bdelete<CR>", silent)
 
 -- Bootstrap lazy.nvim
@@ -69,16 +69,39 @@ require("lazy").setup({
   { "nvim-tree/nvim-web-devicons" },
 
   -- Colorscheme
-  { "ellisonleao/gruvbox.nvim", 
+  {
+    "ellisonleao/gruvbox.nvim",
     priority = 1000,
     config = function()
-      require("gruvbox").setup({ transparent_mode = false })
+      require("gruvbox").setup({
+        transparent_mode = false,
+        contrast = "hard",
+        italic = {
+          strings = false,
+          emphasis = true,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        bold = true,
+        overrides = {
+          SignColumn = { bg = "#282828" },
+          GruvboxGreenSign = { bg = "#282828" },
+          GruvboxOrangeSign = { bg = "#282828" },
+          GruvboxPurpleSign = { bg = "#282828" },
+          GruvboxYellowSign = { bg = "#282828" },
+          GruvboxRedSign = { bg = "#282828" },
+          GruvboxBlueSign = { bg = "#282828" },
+          GruvboxAquaSign = { bg = "#282828" },
+        },
+      })
       vim.cmd.colorscheme("gruvbox")
-    end 
+    end
   },
 
   -- UI
-  { "nvim-tree/nvim-tree.lua",
+  {
+    "nvim-tree/nvim-tree.lua",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("nvim-tree").setup({
@@ -89,26 +112,29 @@ require("lazy").setup({
       })
       map("n", "<leader>e", ":NvimTreeToggle<CR>", silent)
       map("n", "<leader>ef", ":NvimTreeFindFile<CR>", silent)
-    end 
+    end
   },
 
-  { "nvim-lualine/lualine.nvim",
+  {
+    "nvim-lualine/lualine.nvim",
     config = function()
-      require("lualine").setup({ 
-        options = { theme = "gruvbox", globalstatus = true } 
+      require("lualine").setup({
+        options = { theme = "gruvbox", globalstatus = true }
       })
-    end 
+    end
   },
 
-  { "akinsho/bufferline.nvim",
+  {
+    "akinsho/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("bufferline").setup({})
-    end 
+    end
   },
 
-  { "akinsho/toggleterm.nvim",
+  {
+    "akinsho/toggleterm.nvim",
     version = "*",
     config = function()
       require("toggleterm").setup({
@@ -125,19 +151,21 @@ require("lazy").setup({
         hidden = true,
       })
 
-      map({"n", "t"}, "<leader>t", function()
+      map({ "n", "t" }, "<leader>t", function()
         bottom_term:toggle()
       end, silent)
     end
   },
 
-  { "lewis6991/gitsigns.nvim",
+  {
+    "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup()
-    end 
+    end
   },
 
-  { "folke/trouble.nvim",
+  {
+    "folke/trouble.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
     cmd = "Trouble",
     opts = { use_diagnostic_signs = true },
@@ -146,22 +174,25 @@ require("lazy").setup({
     },
   },
 
-  { "windwp/nvim-autopairs",
+  {
+    "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = function()
       require("nvim-autopairs").setup({})
-    end 
+    end
   },
 
-  { "folke/todo-comments.nvim",
+  {
+    "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup()
-    end 
+    end
   },
 
   -- Completion
-  { "hrsh7th/nvim-cmp",
+  {
+    "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
@@ -214,11 +245,12 @@ require("lazy").setup({
           { name = "buffer" },
         }),
       })
-    end 
+    end
   },
 
   -- Treesitter
-  { "nvim-treesitter/nvim-treesitter",
+  {
+    "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").setup({
@@ -226,27 +258,30 @@ require("lazy").setup({
         highlight = { enable = true },
         indent = { enable = true },
       })
-    end 
+    end
   },
 
   -- LSP
-  { "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
-    end 
+    end
   },
 
-  { "williamboman/mason-lspconfig.nvim",
+  {
+    "williamboman/mason-lspconfig.nvim",
     dependencies = "williamboman/mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "clangd", "lua_ls" },
         automatic_installation = true,
       })
-    end 
+    end
   },
 
-  { "neovim/nvim-lspconfig",
+  {
+    "neovim/nvim-lspconfig",
     config = function()
       local function on_attach(_, bufnr)
         local function bufmap(mode, lhs, rhs)
@@ -258,7 +293,7 @@ require("lazy").setup({
         bufmap("n", "gi", vim.lsp.buf.implementation)
         bufmap("n", "K", vim.lsp.buf.hover)
         bufmap("n", "<leader>rn", vim.lsp.buf.rename)
-        bufmap({"n","v"}, "<leader>ca", vim.lsp.buf.code_action)
+        bufmap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action)
         bufmap("n", "<leader>f", function()
           vim.lsp.buf.format({ async = true })
         end)
@@ -297,11 +332,12 @@ require("lazy").setup({
         },
       })
       vim.lsp.enable('lua_ls')
-    end 
+    end
   },
 
   -- Formatting
-  { "stevearc/conform.nvim",
+  {
+    "stevearc/conform.nvim",
     config = function()
       require("conform").setup({
         formatters_by_ft = {
@@ -310,17 +346,78 @@ require("lazy").setup({
         },
         format_on_save = { lsp_fallback = true },
       })
-    end 
-  },
+    end
+  }
+
 })
 
 -- Diagnostic configuration
 vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
+  -- virtual_text = {
+  --   spacing = 1,
+  --   prefix = "",
+  --   format = function(diagnostic)
+  --     local max_width = 50
+  --     local message = diagnostic.message
+  --     if #message > max_width then
+  --       message = message:sub(1, max_width) .. "..."
+  --     end
+  --     return message
+  --   end,
+  -- },
+  virtual_text = false,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "E",
+      [vim.diagnostic.severity.WARN] = "W",
+      [vim.diagnostic.severity.INFO] = "I",
+      [vim.diagnostic.severity.HINT] = "H",
+    },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
+  float = {
+    border = "none",
+    source = false,
+    header = "",
+    prefix = "",
+    suffix = "",
+    format = function(diagnostic)
+      return diagnostic.message
+    end,
+  },
+})
+
+-- Auto-show diagnostic float on cursor hold
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = "none",
+      source = false,
+    }
+    vim.diagnostic.open_float(nil, opts)
+  end
+})
+
+-- Minimal diagnostic highlights
+vim.cmd([[
+  highlight DiagnosticUnderlineError gui=underline guisp=#fb4934
+  highlight DiagnosticUnderlineWarn gui=underline guisp=#fabd2f
+]])
+
+-- LSP hover border
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+  max_width = 100,
+  max_height = 30,
+})
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "rounded",
+  max_width = 100,
 })
 
 -- Compile and Run C++ (single file)
@@ -328,17 +425,17 @@ vim.api.nvim_create_user_command("CppRun", function()
   local file = vim.fn.expand("%:p")
   local file_no_ext = vim.fn.expand("%:p:r")
   local output = file_no_ext
-  
+
   -- Save file first
   vim.cmd("write")
-  
+
   -- Compile command with warnings
-  local compile_cmd = string. format(
-    -- "g++ -Wall -Wextra -std=c++20 '%s' -o '%s'",
+  local compile_cmd = string.format(
+  -- "g++ -Wall -Wextra -std=c++20 '%s' -o '%s'",
     "clang++ -Wall -Wextra -std=c++23 '%s' -o '%s'",
     file, output
   )
-  
+
   -- Create new horizontal terminal and run
   vim.cmd("split")
   vim.cmd("terminal " .. compile_cmd .. " && '" .. output .. "'")
